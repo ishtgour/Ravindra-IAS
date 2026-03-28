@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About | Ravindra IAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="shared.css"/>
+<style>
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:100px 0}
+.about-img-block{position:relative}
+.about-img{width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,var(--navy),#1a2d42);border-radius:28px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:8rem;font-weight:700;color:rgba(255,255,255,0.06);overflow:hidden;position:relative}
+.about-img::before{content:'';position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(0deg,rgba(200,16,46,0.3),transparent)}
+.about-img-badge{position:absolute;bottom:32px;left:32px;background:#fff;border-radius:16px;padding:16px 24px;box-shadow:var(--shadow-lg)}
+.about-img-badge-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--red);line-height:1}
+.about-img-badge-label{font-size:12px;color:var(--text3);margin-top:2px}
+.about-img-accent{position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:var(--red-glow);border:2px solid rgba(200,16,46,0.2);border-radius:50%;animation:float 4s ease-in-out infinite}
+.about-text .section-label{margin-bottom:16px}
+.about-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:700;color:var(--navy);line-height:1.2;letter-spacing:-0.5px;margin-bottom:20px}
+.about-text h2 em{color:var(--red);font-style:italic}
+.about-text p{font-size:16px;color:var(--text2);line-height:1.8;margin-bottom:20px}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+.about-value{background:var(--bg2);border-radius:16px;padding:20px;display:flex;gap:14px;align-items:flex-start;border:1px solid var(--border);transition:all 0.3s var(--transition)}
+.about-value:hover{background:#fff;box-shadow:var(--shadow);transform:translateY(-3px);border-color:var(--red)}
+.about-value-icon{width:40px;height:40px;border-radius:10px;background:var(--red-glow);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.about-value-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.about-value-desc{font-size:12px;color:var(--text3);line-height:1.5}
+
+/* Founder */
+.founder-section{background:var(--bg2);padding:100px 0}
+.founder-grid{display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:center}
+.founder-photo{width:100%;aspect-ratio:1;background:linear-gradient(135deg,var(--navy),var(--red-dark));border-radius:28px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:6rem;font-weight:700;color:rgba(255,255,255,0.15);position:relative}
+.founder-tag{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);background:#fff;padding:12px 24px;border-radius:12px;white-space:nowrap;box-shadow:var(--shadow)}
+.founder-tag-name{font-weight:700;font-size:15px;color:var(--navy);text-align:center}
+.founder-tag-role{font-size:12px;color:var(--text3);text-align:center;margin-top:2px}
+.founder-text h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.founder-text h2 em{color:var(--red);font-style:italic}
+.founder-role{font-size:14px;color:var(--text3);margin-bottom:24px;text-transform:uppercase;letter-spacing:0.08em;font-weight:500}
+.founder-text p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px}
+.founder-achievements{display:flex;gap:32px;margin-top:32px;padding-top:32px;border-top:1px solid var(--border)}
+.founder-ach{text-align:center}
+.founder-ach-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--red)}
+.founder-ach-label{font-size:12px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em}
+
+/* Timeline */
+.timeline-section{padding:100px 0}
+.timeline{position:relative;margin-top:60px;max-width:800px;margin-left:auto;margin-right:auto}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--border);transform:translateX(-50%)}
+.timeline-item{display:grid;grid-template-columns:1fr 40px 1fr;gap:24px;align-items:center;margin-bottom:48px}
+.timeline-item:nth-child(odd) .timeline-left{text-align:right}
+.timeline-item:nth-child(even) .timeline-left{order:3;text-align:left}
+.timeline-item:nth-child(even) .timeline-dot{order:2}
+.timeline-item:nth-child(even) .timeline-right{order:1;text-align:right}
+.timeline-dot{width:40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;position:relative;z-index:1}
+.timeline-year{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--red)}
+.timeline-text{font-size:14px;font-weight:600;color:var(--navy);margin-top:4px}
+.timeline-desc{font-size:13px;color:var(--text2);margin-top:4px;line-height:1.5}
+
+/* Faculty */
+.faculty-section{background:var(--navy);padding:100px 0}
+.faculty-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px}
+.faculty-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:28px;text-align:center;transition:all 0.3s var(--transition)}
+.faculty-card:hover{background:rgba(255,255,255,0.09);transform:translateY(-6px);border-color:rgba(200,16,46,0.4)}
+.faculty-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--navy2));margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#fff}
+.faculty-name{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px}
+.faculty-subject{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em}
+.faculty-exp{display:inline-block;background:var(--red-glow);border:1px solid rgba(200,16,46,0.3);color:var(--red);font-size:11px;padding:3px 12px;border-radius:99px}
+
+@media(max-width:900px){
+  .about-grid,.founder-grid{grid-template-columns:1fr;gap:40px}
+  .about-img,.founder-photo{aspect-ratio:16/7}
+  .faculty-grid{grid-template-columns:repeat(2,1fr)}
+  .timeline::before{left:20px}
+  .timeline-item{grid-template-columns:40px 1fr;gap:16px}
+  .timeline-item:nth-child(odd) .timeline-left,.timeline-item:nth-child(even) .timeline-right{display:none}
+  .timeline-item:nth-child(even) .timeline-left{order:unset;text-align:left}
+  .timeline-item:nth-child(even) .timeline-dot,.timeline-item:nth-child(even) .timeline-right{order:unset}
+  .about-values{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .faculty-grid{grid-template-columns:repeat(2,1fr)}
+  .founder-achievements{flex-wrap:wrap;gap:20px}
+}
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>injectNav('about.html');</script>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="page-hero-eyebrow sr" style="animation:fadeUp 0.6s var(--transition) 0.2s forwards;opacity:0">Our Story</div>
+    <h1 class="sr" style="animation:fadeUp 0.7s var(--transition) 0.3s forwards;opacity:0">Two Decades of<br/><em>Shaping Officers</em></h1>
+    <p class="sr" style="animation:fadeUp 0.7s var(--transition) 0.4s forwards;opacity:0">From a single classroom in Delhi to India's most trusted UPSC coaching platform — the Ravindra IAS story is one of commitment, purpose and results.</p>
+  </div>
+</div>
+
+<!-- ABOUT GRID -->
+<div class="container">
+  <div class="about-grid">
+    <div class="about-img-block sr">
+      <div class="about-img">
+        <img src="img/campus.png" alt="Ravindra IAS Campus" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center"/>
+      </div>
+      <div class="about-img-badge">
+        <div class="about-img-badge-num">20+</div>
+        <div class="about-img-badge-label">Years of Excellence</div>
+      </div>
+      <div class="about-img-accent"></div>
+    </div>
+    <div class="about-text sr" style="transition-delay:0.1s">
+      <div class="section-label">About Ravindra IAS</div>
+      <h2>Built on Purpose,<br/>Driven by <em>Results</em></h2>
+      <p>Founded in 2004 by Dr. Ravindra Singh (IAS, 1998 batch), our academy was born from a simple belief: every aspirant deserves access to world-class UPSC guidance regardless of their background.</p>
+      <p>What started as a small study group in Old Rajinder Nagar has grown into a 500-seat physical campus and a digital platform serving aspirants across 28 states.</p>
+      <div class="about-values">
+        <div class="about-value">
+          <div class="about-value-icon">🎯</div>
+          <div>
+            <div class="about-value-title">Mission</div>
+            <div class="about-value-desc">To make quality UPSC coaching accessible to every deserving aspirant in India.</div>
+          </div>
+        </div>
+        <div class="about-value">
+          <div class="about-value-icon">👁</div>
+          <div>
+            <div class="about-value-title">Vision</div>
+            <div class="about-value-desc">To shape the next generation of India's civil servants — principled, capable, compassionate.</div>
+          </div>
+        </div>
+        <div class="about-value">
+          <div class="about-value-icon">⚖️</div>
+          <div>
+            <div class="about-value-title">Values</div>
+            <div class="about-value-desc">Integrity, academic rigour, student-first approach, and zero compromise on quality.</div>
+          </div>
+        </div>
+        <div class="about-value">
+          <div class="about-value-icon">🏆</div>
+          <div>
+            <div class="about-value-title">Promise</div>
+            <div class="about-value-desc">Personalised attention to every student. You are never just a roll number here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOUNDER -->
+<div class="founder-section">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-photo sr">
+        <img src="img/founder.png" alt="Dr. Ravindra Singh" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:28px"/>
+        <div class="founder-tag">
+          <div class="founder-tag-name">Dr. Ravindra Singh</div>
+          <div class="founder-tag-role">IAS (1998 Batch) · Founder</div>
+        </div>
+      </div>
+      <div class="founder-text sr" style="transition-delay:0.1s">
+        <div class="section-label">Our Founder</div>
+        <h2>Dr. Ravindra <em>Singh</em></h2>
+        <div class="founder-role">IAS Officer (Retd.) · MP Cadre · Founder & Director</div>
+        <p>Dr. Ravindra Singh served in the Indian Administrative Service for 28 years, holding positions including District Collector, Secretary to Government, and Director of Public Administration. After retiring, he dedicated himself to training the next generation.</p>
+        <p>His teaching philosophy is simple: understand concepts deeply, practice relentlessly, and always connect your answers to ground reality. Under his leadership, Ravindra IAS has produced 5000+ selections including multiple top-20 rankers.</p>
+        <p>"Civil services is not just a career — it's a calling. My goal is to prepare officers who are not just exam-ready, but governance-ready."</p>
+        <div class="founder-achievements">
+          <div class="founder-ach">
+            <div class="founder-ach-num">28</div>
+            <div class="founder-ach-label">Years in IAS</div>
+          </div>
+          <div class="founder-ach">
+            <div class="founder-ach-num">5000+</div>
+            <div class="founder-ach-label">Students Selected</div>
+          </div>
+          <div class="founder-ach">
+            <div class="founder-ach-num">4</div>
+            <div class="founder-ach-label">Books Published</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="sr" style="text-align:center">
+      <div class="section-label" style="justify-content:center">Our Journey</div>
+      <div class="section-title" style="text-align:center">Two Decades of <em>Milestones</em></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item sr">
+        <div class="timeline-left">
+          <div class="timeline-year">2004</div>
+          <div class="timeline-text">The Beginning</div>
+          <div class="timeline-desc">First batch of 40 students in a rented hall in Old Rajinder Nagar, Delhi.</div>
+        </div>
+        <div class="timeline-dot">●</div>
+        <div class="timeline-right"></div>
+      </div>
+      <div class="timeline-item sr">
+        <div class="timeline-left"></div>
+        <div class="timeline-dot">●</div>
+        <div class="timeline-right">
+          <div class="timeline-year">2008</div>
+          <div class="timeline-text">First Topper</div>
+          <div class="timeline-desc">Our student Anjali Misra secured AIR 12 — our first major breakthrough.</div>
+        </div>
+      </div>
+      <div class="timeline-item sr">
+        <div class="timeline-left">
+          <div class="timeline-year">2012</div>
+          <div class="timeline-text">Own Campus</div>
+          <div class="timeline-desc">Inaugurated our 500-seat dedicated campus with library, test halls and faculty rooms.</div>
+        </div>
+        <div class="timeline-dot">●</div>
+        <div class="timeline-right"></div>
+      </div>
+      <div class="timeline-item sr">
+        <div class="timeline-left"></div>
+        <div class="timeline-dot">●</div>
+        <div class="timeline-right">
+          <div class="timeline-year">2018</div>
+          <div class="timeline-text">Digital Launch</div>
+          <div class="timeline-desc">Launched online platform, bringing Ravindra IAS to aspirants across India.</div>
+        </div>
+      </div>
+      <div class="timeline-item sr">
+        <div class="timeline-left">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-text">5000+ Selections</div>
+          <div class="timeline-desc">Crossed the milestone of 5000+ UPSC selections with AIR 4 as our best result.</div>
+        </div>
+        <div class="timeline-dot">●</div>
+        <div class="timeline-right"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FACULTY -->
+<section class="faculty-section">
+  <div class="container">
+    <div class="sr" style="text-align:center">
+      <div class="section-label" style="justify-content:center;color:rgba(255,255,255,0.4)">Our Experts</div>
+      <div class="section-title" style="text-align:center;color:#fff">Meet the <em style="color:var(--gold)">Faculty</em></div>
+    </div>
+    <div class="faculty-grid">
+      <div class="faculty-card sr">
+        <div class="faculty-avatar" style="overflow:hidden;padding:0">
+          <img src="img/founder.png" alt="Dr. Ravindra Singh" style="width:100%;height:100%;object-fit:cover;object-position:top center"/>
+        </div>
+        <div class="faculty-name">Dr. Ravindra Singh</div>
+        <div class="faculty-subject">GS Paper I & II</div>
+        <div class="faculty-exp">IAS, 28 yrs exp</div>
+      </div>
+      <div class="faculty-card sr" style="transition-delay:0.08s">
+        <div class="faculty-avatar" style="overflow:hidden;padding:0;background:none">
+          <img src="img/faculty-priya.png" alt="Prof. Priya Malhotra" style="width:100%;height:100%;object-fit:cover;object-position:top center"/>
+        </div>
+        <div class="faculty-name">Prof. Priya Malhotra</div>
+        <div class="faculty-subject">History & Culture</div>
+        <div class="faculty-exp">PhD, 16 yrs exp</div>
+      </div>
+      <div class="faculty-card sr" style="transition-delay:0.16s">
+        <div class="faculty-avatar" style="overflow:hidden;padding:0;background:none">
+          <img src="img/faculty-amit.png" alt="Adv. Amit Kumar" style="width:100%;height:100%;object-fit:cover;object-position:top center"/>
+        </div>
+        <div class="faculty-name">Adv. Amit Kumar</div>
+        <div class="faculty-subject">Polity & Governance</div>
+        <div class="faculty-exp">LLB, 12 yrs exp</div>
+      </div>
+      <div class="faculty-card sr" style="transition-delay:0.24s">
+        <div class="faculty-avatar" style="background:linear-gradient(135deg,#0a4a6b,#1a2d42)">SR</div>
+        <div class="faculty-name">Dr. Sunita Rao</div>
+        <div class="faculty-subject">Geography & Environment</div>
+        <div class="faculty-exp">IFS, 20 yrs exp</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px">
+      <a href="contact.html" class="hero-btn-main">Book a Free Demo Class →</a>
+    </div>
+  </div>
+</section>
+
+<script>injectFooter(); initCommon();</script>
+</body>
+</html>

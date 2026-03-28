@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Study Resources | Ravindra IAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="shared.css"/>
+<style>
+.resource-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.res-cat-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;transition:all 0.3s var(--transition);cursor:pointer;position:relative;overflow:hidden}
+.res-cat-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform 0.3s var(--transition)}
+.res-cat-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--red)}
+.res-cat-card:hover::before{transform:scaleY(1)}
+.res-cat-icon{font-size:2.2rem;margin-bottom:16px}
+.res-cat-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+.res-cat-count{display:inline-block;background:var(--red-glow);color:var(--red);font-size:11px;font-weight:600;padding:3px 12px;border-radius:99px;margin-bottom:12px}
+.res-cat-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* Current Affairs */
+.ca-section{background:var(--bg2);padding:100px 0}
+.ca-list{margin-top:48px;display:flex;flex-direction:column;gap:0}
+.ca-item{display:flex;align-items:center;gap:24px;padding:20px 24px;background:var(--card);border-radius:0;border-bottom:1px solid var(--border);transition:all 0.2s;cursor:pointer}
+.ca-item:first-child{border-radius:16px 16px 0 0}
+.ca-item:last-child{border-radius:0 0 16px 16px;border-bottom:none}
+.ca-item:hover{background:var(--bg2);padding-left:32px}
+.ca-date{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;white-space:nowrap;text-transform:uppercase;letter-spacing:0.06em}
+.ca-title{font-size:14px;font-weight:600;color:var(--navy);flex:1}
+.ca-tag{font-size:11px;color:var(--text3);background:var(--bg2);padding:3px 10px;border-radius:99px;white-space:nowrap}
+.ca-arrow{color:var(--text3);font-size:16px;transition:transform 0.2s,color 0.2s}
+.ca-item:hover .ca-arrow{transform:translateX(4px);color:var(--red)}
+
+/* Downloads */
+.downloads-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.dl-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;display:flex;gap:20px;align-items:flex-start;transition:all 0.3s var(--transition)}
+.dl-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--red)}
+.dl-icon{width:52px;height:52px;border-radius:14px;background:var(--red-glow);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.dl-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.dl-meta{font-size:12px;color:var(--text3);margin-bottom:16px}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1.5px solid var(--red);color:var(--red);padding:8px 18px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none}
+.dl-btn:hover{background:var(--red);color:#fff}
+
+/* Videos */
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
+.video-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all 0.3s var(--transition);cursor:pointer}
+.video-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--red)}
+.video-thumb{aspect-ratio:16/9;background:linear-gradient(135deg,var(--navy),var(--navy2));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.video-thumb::before{content:'';position:absolute;inset:0;background:var(--red);opacity:0;transition:opacity 0.3s}
+.video-card:hover .video-thumb::before{opacity:0.1}
+.play-btn{width:52px;height:52px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.3s;border:2px solid rgba(255,255,255,0.3)}
+.play-btn-icon{width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:4px}
+.video-card:hover .play-btn{background:var(--red);transform:scale(1.1);border-color:transparent}
+.video-duration{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;padding:3px 8px;border-radius:6px}
+.video-body{padding:20px}
+.video-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.4}
+.video-meta{display:flex;gap:8px;font-size:11px;color:var(--text3)}
+.video-tag{background:var(--bg2);padding:2px 8px;border-radius:4px}
+
+@media(max-width:900px){
+  .resource-cats,.downloads-grid,.video-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .resource-cats,.downloads-grid,.video-grid{grid-template-columns:1fr}
+  .ca-tag{display:none}
+}
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>injectNav('resources.html');</script>
+
+<div class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="page-hero-eyebrow">Study Resources</div>
+    <h1>Everything You Need<br/>to <em>Crack UPSC</em></h1>
+    <p>From NCERT notes to previous year papers, daily current affairs to video lectures — your one-stop resource hub for UPSC preparation.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Resource Categories</div>
+      <div class="section-title">Explore Our <em>Library</em></div>
+    </div>
+    <div class="resource-cats">
+      <div class="res-cat-card sr">
+        <div class="res-cat-icon">📚</div>
+        <div class="res-cat-title">NCERT Notes</div>
+        <div class="res-cat-count">148 PDFs</div>
+        <div class="res-cat-desc">Comprehensive NCERT summaries for Class 6–12 covering History, Geography, Polity, Economics and Science.</div>
+      </div>
+      <div class="res-cat-card sr" style="transition-delay:0.08s">
+        <div class="res-cat-icon">📋</div>
+        <div class="res-cat-title">Previous Year Papers</div>
+        <div class="res-cat-count">10 Years</div>
+        <div class="res-cat-desc">Last 10 years' Prelims and Mains papers with model answers, subject-wise analysis and trend reports.</div>
+      </div>
+      <div class="res-cat-card sr" style="transition-delay:0.16s">
+        <div class="res-cat-icon">📰</div>
+        <div class="res-cat-title">Current Affairs</div>
+        <div class="res-cat-count">Daily Updates</div>
+        <div class="res-cat-desc">Daily, weekly and monthly current affairs compiled from The Hindu, PIB, PRS and other official sources.</div>
+      </div>
+      <div class="res-cat-card sr" style="transition-delay:0.24s">
+        <div class="res-cat-icon">🗺️</div>
+        <div class="res-cat-title">Mind Maps</div>
+        <div class="res-cat-count">86 Maps</div>
+        <div class="res-cat-desc">Visual mind maps for all GS topics — ideal for quick revision and connecting concepts.</div>
+      </div>
+      <div class="res-cat-card sr" style="transition-delay:0.32s">
+        <div class="res-cat-icon">📝</div>
+        <div class="res-cat-title">Test Papers</div>
+        <div class="res-cat-count">200+ Tests</div>
+        <div class="res-cat-desc">Topic-wise, section-wise and full-length mock tests with detailed solutions and performance analytics.</div>
+      </div>
+      <div class="res-cat-card sr" style="transition-delay:0.40s">
+        <div class="res-cat-icon">🎥</div>
+        <div class="res-cat-title">Video Lectures</div>
+        <div class="res-cat-count">500+ Hours</div>
+        <div class="res-cat-desc">Recorded lectures by our expert faculty covering every topic in the UPSC syllabus, HD quality.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRENT AFFAIRS -->
+<section class="ca-section">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Latest</div>
+      <div class="section-title">Today's Current <em>Affairs</em></div>
+    </div>
+    <div class="ca-list sr" style="transition-delay:0.1s">
+      <div class="ca-item">
+        <span class="ca-date">Mar 28</span>
+        <div class="ca-title">India's GDP growth projected at 6.8% for FY2025-26: IMF World Economic Outlook</div>
+        <span class="ca-tag">Economy</span>
+        <span class="ca-arrow">→</span>
+      </div>
+      <div class="ca-item">
+        <span class="ca-date">Mar 28</span>
+        <div class="ca-title">Rajya Sabha passes the Waqf (Amendment) Bill 2025 — Key provisions explained</div>
+        <span class="ca-tag">Polity</span>
+        <span class="ca-arrow">→</span>
+      </div>
+      <div class="ca-item">
+        <span class="ca-date">Mar 27</span>
+        <div class="ca-title">ISRO's PSLV-C61 successfully launches Earth Observation Satellite EOS-09</div>
+        <span class="ca-tag">S&T</span>
+        <span class="ca-arrow">→</span>
+      </div>
+      <div class="ca-item">
+        <span class="ca-date">Mar 27</span>
+        <div class="ca-title">India ranked 130th on Human Development Index 2024 — UNDP Report Analysis</div>
+        <span class="ca-tag">IR</span>
+        <span class="ca-arrow">→</span>
+      </div>
+      <div class="ca-item">
+        <span class="ca-date">Mar 26</span>
+        <div class="ca-title">New Forest Conservation Rules 2025: Implications for tribal rights and environment</div>
+        <span class="ca-tag">Environment</span>
+        <span class="ca-arrow">→</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <a href="#" class="hero-btn-ghost">View All Current Affairs →</a>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOADS -->
+<section class="section">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Free Downloads</div>
+      <div class="section-title">Download <em>Free Resources</em></div>
+    </div>
+    <div class="downloads-grid">
+      <div class="dl-card sr">
+        <div class="dl-icon">📄</div>
+        <div>
+          <div class="dl-title">UPSC Syllabus 2025 (Prelims + Mains)</div>
+          <div class="dl-meta">PDF · 2.4 MB · Updated March 2025</div>
+          <a href="#" class="dl-btn" onclick="alert('Downloading UPSC Syllabus PDF...');return false">↓ Download Free</a>
+        </div>
+      </div>
+      <div class="dl-card sr" style="transition-delay:0.08s">
+        <div class="dl-icon">📦</div>
+        <div>
+          <div class="dl-title">Last 10 Years Papers Pack (Prelims + Mains)</div>
+          <div class="dl-meta">ZIP · 18.6 MB · 2014–2024</div>
+          <a href="#" class="dl-btn" onclick="alert('Downloading Papers Pack...');return false">↓ Download Free</a>
+        </div>
+      </div>
+      <div class="dl-card sr" style="transition-delay:0.16s">
+        <div class="dl-icon">📆</div>
+        <div>
+          <div class="dl-title">March 2025 Monthly Current Affairs Magazine</div>
+          <div class="dl-meta">PDF · 5.8 MB · 120 pages</div>
+          <a href="#" class="dl-btn" onclick="alert('Downloading Current Affairs Magazine...');return false">↓ Download Free</a>
+        </div>
+      </div>
+      <div class="dl-card sr" style="transition-delay:0.24s">
+        <div class="dl-icon">🗺️</div>
+        <div>
+          <div class="dl-title">India & World Atlas for UPSC (Map pack)</div>
+          <div class="dl-meta">PDF · 8.2 MB · 60 maps</div>
+          <a href="#" class="dl-btn" onclick="alert('Downloading Atlas Pack...');return false">↓ Download Free</a>
+        </div>
+      </div>
+      <div class="dl-card sr" style="transition-delay:0.32s">
+        <div class="dl-icon">📊</div>
+        <div>
+          <div class="dl-title">UPSC Marks Sheet — Last 5 Years Analysis</div>
+          <div class="dl-meta">PDF · 1.8 MB · Data up to 2024</div>
+          <a href="#" class="dl-btn" onclick="alert('Downloading Marks Sheet...');return false">↓ Download Free</a>
+        </div>
+      </div>
+      <div class="dl-card sr" style="transition-delay:0.40s">
+        <div class="dl-icon">📖</div>
+        <div>
+          <div class="dl-title">Ethics & Integrity Handbook (GS Paper IV)</div>
+          <div class="dl-meta">PDF · 3.6 MB · Ravindra IAS Edition</div>
+          <a href="#" class="dl-btn" onclick="alert('Downloading Ethics Handbook...');return false">↓ Download Free</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="section" style="background:var(--bg2);padding:100px 0">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Video Lectures</div>
+      <div class="section-title">Free <em>Sample Classes</em></div>
+    </div>
+    <div class="video-grid">
+      <div class="video-card sr">
+        <div class="video-thumb" onclick="alert('Opening video lecture...')">
+          <div class="play-btn"><div class="play-btn-icon"></div></div>
+          <div class="video-duration">48:22</div>
+        </div>
+        <div class="video-body">
+          <div class="video-title">Introduction to Indian Constitution — Preamble & Basic Structure</div>
+          <div class="video-meta"><span class="video-tag">Polity</span><span>by Dr. Ravindra Singh</span></div>
+        </div>
+      </div>
+      <div class="video-card sr" style="transition-delay:0.08s">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1a3a4a,#0D1B2A)" onclick="alert('Opening video lecture...')">
+          <div class="play-btn"><div class="play-btn-icon"></div></div>
+          <div class="video-duration">55:10</div>
+        </div>
+        <div class="video-body">
+          <div class="video-title">Physical Geography of India — Drainage Systems & River Disputes</div>
+          <div class="video-meta"><span class="video-tag">Geography</span><span>by Dr. Sunita Rao</span></div>
+        </div>
+      </div>
+      <div class="video-card sr" style="transition-delay:0.16s">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#3a1a1a,#1a2d42)" onclick="alert('Opening video lecture...')">
+          <div class="play-btn"><div class="play-btn-icon"></div></div>
+          <div class="video-duration">62:45</div>
+        </div>
+        <div class="video-body">
+          <div class="video-title">Ethics in Public Life — Case Study Approach for GS Paper IV</div>
+          <div class="video-meta"><span class="video-tag">Ethics</span><span>by Prof. Priya Malhotra</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>injectFooter(); initCommon();</script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Courses | Ravindra IAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="shared.css"/>
+<style>
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:48px}
+.filter-pill{padding:10px 22px;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.filter-pill:hover,.filter-pill.active{background:var(--red);color:#fff;border-color:var(--red)}
+
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:48px}
+.course-card{background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;transition:all 0.35s var(--transition);display:flex;flex-direction:column}
+.course-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:rgba(200,16,46,0.3)}
+.course-card.hidden{display:none}
+.course-top{padding:28px 28px 0}
+.course-badges{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:600;padding:4px 12px;border-radius:99px;letter-spacing:0.05em}
+.badge-red{background:var(--red-glow);color:var(--red)}
+.badge-gold{background:rgba(212,160,23,0.12);color:#a07800}
+.badge-blue{background:rgba(0,88,186,0.1);color:#0058ba}
+.course-title{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.3}
+.course-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:20px}
+.course-features{list-style:none;display:flex;flex-direction:column;gap:8px;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:0}
+.course-features li{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2)}
+.course-features li::before{content:'✓';width:18px;height:18px;border-radius:50%;background:var(--red-glow);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.course-bottom{padding:20px 28px 28px;display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.course-price{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;color:var(--navy);line-height:1}
+.course-price sup{font-size:1rem;vertical-align:super}
+.course-price-note{font-size:11px;color:var(--text3);margin-top:2px}
+.enroll-btn{background:var(--navy);color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;text-decoration:none;display:inline-block}
+.enroll-btn:hover{background:var(--red);transform:scale(1.04)}
+
+.compare-section{background:var(--bg2);padding:100px 0}
+.compare-table{width:100%;border-collapse:collapse;margin-top:48px;background:var(--card);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.compare-table th{padding:20px 24px;text-align:left;background:var(--navy);color:#fff;font-size:13px;font-weight:600;letter-spacing:0.04em}
+.compare-table th:first-child{border-radius:0}
+.compare-table td{padding:18px 24px;font-size:14px;color:var(--text2);border-bottom:1px solid var(--border)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr:hover td{background:var(--bg2)}
+.compare-table td:first-child{font-weight:600;color:var(--navy)}
+.check{color:var(--red);font-weight:700;font-size:16px}
+.cross{color:var(--text3)}
+
+.emi-section{padding:80px 0;text-align:center}
+.emi-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.emi-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;text-align:center;transition:all 0.3s var(--transition)}
+.emi-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--red)}
+.emi-amount{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--red);margin-bottom:8px}
+.emi-label{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.emi-desc{font-size:13px;color:var(--text3);line-height:1.5}
+
+@media(max-width:900px){
+  .courses-grid{grid-template-columns:1fr 1fr}
+  .emi-cards{grid-template-columns:1fr 1fr}
+  .compare-table{font-size:12px}
+  .compare-table th,.compare-table td{padding:12px 14px}
+}
+@media(max-width:600px){
+  .courses-grid,.emi-cards{grid-template-columns:1fr}
+  .compare-table{display:block;overflow-x:auto}
+}
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>injectNav('courses.html');</script>
+
+<div class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="page-hero-eyebrow">Programs</div>
+    <h1>Choose Your<br/><em>Path to IAS</em></h1>
+    <p>Six carefully designed programs covering every stage of UPSC preparation. From foundation to interview — we've got you covered.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="sr">
+      <div class="section-label">Our Programs</div>
+      <div class="section-title">Programs for <em>Every Stage</em></div>
+    </div>
+
+    <div class="filter-bar sr">
+      <button class="filter-pill active" data-filter="all">All Programs</button>
+      <button class="filter-pill" data-filter="prelims">Prelims</button>
+      <button class="filter-pill" data-filter="mains">Mains</button>
+      <button class="filter-pill" data-filter="interview">Interview</button>
+      <button class="filter-pill" data-filter="test">Test Series</button>
+      <button class="filter-pill" data-filter="mentorship">Mentorship</button>
+    </div>
+
+    <div class="courses-grid">
+
+      <div class="course-card sr" data-category="prelims mains">
+        <div class="course-top">
+          <div class="course-badges">
+            <span class="badge badge-gold">⭐ Most Popular</span>
+            <span class="badge badge-blue">Hybrid</span>
+          </div>
+          <div class="course-title">GS Foundation (Prelims + Mains)</div>
+          <div class="course-desc">Complete 12-month integrated program covering all GS papers with answer writing and full test series. The flagship program of Ravindra IAS.</div>
+          <ul class="course-features">
+            <li>All 4 GS Papers (Prelims + Mains)</li>
+            <li>CSAT included</li>
+            <li>Weekly answer writing review</li>
+            <li>Monthly full-length mock tests</li>
+            <li>Printed study material + digital PDFs</li>
+          </ul>
+        </div>
+        <div class="course-bottom">
+          <div>
+            <div class="course-price"><sup>₹</sup>45,000</div>
+            <div class="course-price-note">EMI from ₹4,000/month</div>
+          </div>
+          <a href="contact.html" class="enroll-btn">Enroll Now →</a>
+        </div>
+      </div>
+
+      <div class="course-card sr" style="transition-delay:0.08s" data-category="prelims">
+        <div class="course-top">
+          <div class="course-badges">
+            <span class="badge badge-red">Prelims</span>
+            <span class="badge badge-blue">Online</span>
+          </div>
+          <div class="course-title">Prelims Crash Course</div>
+          <div class="course-desc">Intensive 3-month program for aspirants targeting Prelims. High-yield topics, rapid revision and 50+ full-length mock tests.</div>
+          <ul class="course-features">
+            <li>High-yield topic coverage</li>
+            <li>50+ full-length mocks</li>
+            <li>Daily current affairs</li>
+            <li>Previous year paper analysis</li>
+          </ul>
+        </div>
+        <div class="course-bottom">
+          <div>
+            <div class="course-price"><sup>₹</sup>18,000</div>
+            <div class="course-price-note">No EMI required</div>
+          </div>
+          <a href="contact.html" class="enroll-btn">Enroll Now →</a>
+        </div>
+      </div>
+
+      <div class="course-card sr" style="transition-delay:0.16s" data-category="mains">
+        <div class="course-top">
+          <div class="course-badges">
+            <span class="badge badge-red">Mains</span>
+            <span class="badge badge-blue">Online</span>
+          </div>
+          <div class="course-title">Mains Answer Writing Program</div>
+          <div class="course-desc">6-month program dedicated to answer writing, essay practice, and GS Paper analysis. Includes expert evaluation of every answer.</div>
+          <ul class="course-features">
+            <li>100+ answer evaluations</li>
+            <li>Essay module (Paper I)</li>
+            <li>Ethics case studies</li>
+            <li>Toppers' answer booklets</li>
+          </ul>
+        </div>
+        <div class="course-bottom">
+          <div>
+            <div class="course-price"><sup>₹</sup>22,000</div>
+            <div class="course-price-note">EMI from ₹4,000/month</div>
+          </div>
+          <a href="contact.html" class="enroll-btn">Enroll Now →</a>
+        </div>
+      </div>
+
+      <div class="course-card sr" style="transition-delay:0.24s" data-category="prelims">
+        <div class="course-top">
+          <div class="course-badges">
+            <span class="badge badge-red">CSAT</span>
+            <span class="badge badge-blue">Online</span>
+          </div>
+          <div class="course-title">CSAT Mastery</div>
+          <div class="course-desc">2-month focused program on CSAT (Paper II). Maths, reasoning, English comprehension and data interpretation — fully covered.</div>
+          <ul class="course-features">
+            <li>Quantitative aptitude modules</li>
+            <li>Reading comprehension techniques</li>
+            <li>Logical reasoning shortcuts</li>
+            <li>20+ CSAT mock tests</li>
+          </ul>
+        </div>
+        <div class="course-bottom">
+          <div>
+            <div class="course-price"><sup>₹</sup>9,000</div>
+            <div class="course-price-note">One-time payment</div>
+          </div>
+          <a href="contact.html" class="enroll-btn">Enroll Now →</a>
+        </div>
+      </div>
+
+      <div class="course-card sr" style="transition-delay:0.32s" data-category="interview">
+        <div class="course-top">
+          <div class="course-badges">
+            <span class="badge badge-gold">Interview</span>
+          </div>
+          <div class="course-title">Interview Guidance Programme</div>
+          <div class="course-desc">1-month offline intensive. Mock interviews with retired IAS/IPS/IFS officers. Personality development, DAF analysis and board prep.</div>
+          <ul class="course-features">
+            <li>5 mock interviews with retired officers</li>
+            <li>DAF-based question bank</li>
+            <li>Personality development sessions</li>
+            <li>Current affairs for interview</li>
+          </ul>
+        </div>
+        <div class="course-bottom">
+          <div>
+            <div class="course-price"><sup>₹</sup>15,000</div>
+            <div class="course-price-note">Offline only</div>
+          </div>
+          <a href="contact.html" class="enroll-btn">Enroll Now →</a>
+        </div>
+      </div>
+
+      <div class="course-card sr" style="transition-delay:0.40s" data-category="mains mentorship">
+        <div class="course-top">
+          <div class="course-badges">
+            <span class="badge badge-red">Optional</span>
+            <span class="badge badge-blue">Hybrid</span>
+          </div>
+          <div class="course-title">Optional Subject (History / Geography / PSIR)</div>
+          <div class="course-desc">8-month deep-dive into your optional subject with specialised faculty, answer writing and a comprehensive test series.</div>
+          <ul class="course-features">
+            <li>Complete syllabus coverage</li>
+            <li>40+ optional test papers</li>
+            <li>Topper answer sheets</li>
+            <li>1-on-1 doubt clearing</li>
+          </ul>
+        </div>
+        <div class="course-bottom">
+          <div>
+            <div class="course-price"><sup>₹</sup>28,000</div>
+            <div class="course-price-note">EMI from ₹3,500/month</div>
+          </div>
+          <a href="contact.html" class="enroll-btn">Enroll Now →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare-section">
+  <div class="container">
+    <div class="sr" style="text-align:center">
+      <div class="section-label" style="justify-content:center">Compare</div>
+      <div class="section-title" style="text-align:center">Which Program is<br/><em>Right for You?</em></div>
+    </div>
+    <div style="overflow-x:auto;margin-top:48px" class="sr">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>GS Foundation</th>
+            <th>Crash Course</th>
+            <th>Mains AWP</th>
+            <th>Interview IGP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Duration</td><td>12 months</td><td>3 months</td><td>6 months</td><td>1 month</td></tr>
+          <tr><td>Live Classes</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Recorded Access</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td></tr>
+          <tr><td>Study Material</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Answer Evaluation</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Mock Interviews</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td></tr>
+          <tr><td>Mentorship Calls</td><td class="check">✓</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td>Fee</td><td>₹45,000</td><td>₹18,000</td><td>₹22,000</td><td>₹15,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- EMI -->
+<section class="emi-section">
+  <div class="container">
+    <div class="sr" style="text-align:center">
+      <div class="section-label" style="justify-content:center">Flexible Fees</div>
+      <div class="section-title" style="text-align:center">Pay at Your Own <em>Pace</em></div>
+      <p class="section-sub" style="margin:12px auto 0;text-align:center">Zero-interest EMI plans for all major programs. Never let finances stop your IAS dream.</p>
+    </div>
+    <div class="emi-cards">
+      <div class="emi-card sr">
+        <div class="emi-amount">₹2,500/mo</div>
+        <div class="emi-label">18-Month EMI</div>
+        <div class="emi-desc">Best for GS Foundation. Spread across 18 months with zero interest. 0% processing fee.</div>
+      </div>
+      <div class="emi-card sr" style="transition-delay:0.08s;border-color:var(--red)">
+        <div class="emi-amount">₹4,000/mo</div>
+        <div class="emi-label">12-Month EMI</div>
+        <div class="emi-desc">Most popular plan. Suits all programs. Easy online enrolment via debit/credit card or UPI.</div>
+      </div>
+      <div class="emi-card sr" style="transition-delay:0.16s">
+        <div class="emi-amount">₹7,500/mo</div>
+        <div class="emi-label">6-Month EMI</div>
+        <div class="emi-desc">Pay faster, gain access immediately. Ideal for crash courses and short-term programs.</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px">
+      <a href="contact.html" class="hero-btn-main">Talk to a Counsellor →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+// Filter
+document.querySelectorAll('.filter-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    const filter = pill.dataset.filter;
+    document.querySelectorAll('.course-card').forEach(card => {
+      const cats = card.dataset.category || '';
+      if (filter === 'all' || cats.includes(filter)) {
+        card.classList.remove('hidden');
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+  injectFooter();
+initCommon();
+</script>
+</body>
+</html>

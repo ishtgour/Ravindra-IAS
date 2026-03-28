@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact & Enroll | Ravindra IAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="shared.css"/>
+<style>
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;padding:100px 0;align-items:start}
+.contact-info{display:flex;flex-direction:column;gap:32px}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;display:flex;gap:20px;align-items:flex-start;transition:all 0.3s var(--transition)}
+.info-card:hover{transform:translateX(6px);border-color:var(--red);box-shadow:var(--shadow)}
+.info-icon{width:48px;height:48px;border-radius:14px;background:var(--red-glow);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.info-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;font-weight:600}
+.info-value{font-size:15px;font-weight:600;color:var(--navy)}
+.info-sub{font-size:13px;color:var(--text2);margin-top:2px}
+
+.map-block{background:var(--navy);border-radius:20px;height:200px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:14px;margin-top:32px;overflow:hidden;position:relative}
+.map-block::before{content:'📍';position:absolute;font-size:3rem;opacity:0.15}
+
+.socials-row{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.social-link{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:var(--text2);font-size:13px;font-weight:500;transition:all 0.2s}
+.social-link:hover{border-color:var(--red);color:var(--red);transform:translateY(-2px);box-shadow:var(--shadow)}
+
+/* Form */
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:48px;box-shadow:var(--shadow)}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.form-sub{font-size:14px;color:var(--text2);margin-bottom:36px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:20px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em}
+.form-input{width:100%;height:50px;border:1.5px solid var(--border);border-radius:12px;padding:0 16px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);transition:all 0.2s;outline:none}
+.form-input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,46,0.1);background:#fff}
+.form-select{width:100%;height:50px;border:1.5px solid var(--border);border-radius:12px;padding:0 16px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);appearance:none;cursor:pointer;outline:none;transition:all 0.2s}
+.form-select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,46,0.1)}
+.form-textarea{width:100%;height:120px;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);resize:vertical;outline:none;transition:all 0.2s;line-height:1.6}
+.form-textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,46,0.1)}
+.submit-btn{width:100%;height:56px;background:var(--red);color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden}
+.submit-btn::after{content:'';position:absolute;top:0;left:0;width:60px;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);transform:translateX(-100%);animation:shimmer 3s ease-in-out infinite}
+.submit-btn:hover{background:var(--red-dark);transform:translateY(-2px);box-shadow:0 8px 32px var(--red-glow)}
+.form-note{text-align:center;font-size:13px;color:var(--text3);margin-top:16px}
+.form-note a{color:var(--red);text-decoration:none;font-weight:600}
+
+/* Success message */
+.form-success{display:none;text-align:center;padding:40px;background:rgba(200,16,46,0.05);border:1.5px solid rgba(200,16,46,0.2);border-radius:14px;margin-top:16px}
+.form-success-icon{font-size:3rem;margin-bottom:16px}
+.form-success-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.form-success-text{font-size:14px;color:var(--text2)}
+
+/* FAQ */
+.faq-section{background:var(--bg2);padding:100px 0}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:56px}
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-question{width:100%;text-align:left;background:none;border:none;padding:22px 0;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--navy);gap:16px;transition:color 0.2s}
+.faq-question:hover{color:var(--red)}
+.faq-icon{width:28px;height:28px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.3s;font-size:16px;font-weight:300;color:var(--text2)}
+.faq-item.open .faq-icon{background:var(--red);color:#fff;transform:rotate(45deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)}
+.faq-answer-inner{padding:0 0 20px;font-size:14px;color:var(--text2);line-height:1.8}
+
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  .form-row{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .form-card{padding:28px 24px}
+}
+</style>
+</head>
+<body>
+<script src="shared.js"></script>
+<script>injectNav('contact.html');</script>
+
+<div class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="page-hero-eyebrow">Enroll Now</div>
+    <h1>Start Your IAS<br/><em>Journey Today</em></h1>
+    <p>Talk to our expert counsellors, choose the right program, and take the first step toward becoming an IAS officer. Free counselling sessions available.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="contact-grid">
+    <!-- Contact Info -->
+    <div class="contact-info sr">
+      <div>
+        <div class="section-label">Get in Touch</div>
+        <div class="section-title" style="font-size:1.8rem">We're Here<br/>to <em>Help You</em></div>
+        <p class="section-sub" style="margin-top:12px">Reach out to our admissions team. We'll help you choose the right program and get started.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">Old Rajinder Nagar, New Delhi</div>
+          <div class="info-sub">Near Rajinder Nagar Metro Station, Gate 2</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">Phone</div>
+          <div class="info-value"><a href="tel:+919876543210" style="color:var(--navy);text-decoration:none">+91 98765 43210</a></div>
+          <div class="info-sub">Mon–Sat: 9:00 AM – 7:00 PM</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">✉</div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-value"><a href="mailto:info@ravindraias.com" style="color:var(--navy);text-decoration:none">info@ravindraias.com</a></div>
+          <div class="info-sub">We reply within 4 hours on weekdays</div>
+        </div>
+      </div>
+      <div class="map-block">
+        Old Rajinder Nagar, New Delhi — 110060
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:16px">Follow Us</div>
+        <div class="socials-row">
+          <a href="#" class="social-link">in LinkedIn</a>
+          <a href="#" class="social-link">▶ YouTube</a>
+          <a href="#" class="social-link">✈ Telegram</a>
+          <a href="#" class="social-link">📸 Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enrollment Form -->
+    <div class="form-card sr" style="transition-delay:0.1s">
+      <div class="form-title">Enroll for Free Counselling</div>
+      <div class="form-sub">Fill in your details and our counsellor will call you back within 24 hours. No spam, no obligations.</div>
+      <form id="enrollForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input class="form-input" type="text" placeholder="Arjun Mehta" required id="fname"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input class="form-input" type="tel" placeholder="+91 98765 43210" required id="fphone"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" placeholder="you@gmail.com" id="femail"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">City / State</label>
+            <input class="form-input" type="text" placeholder="Raipur, Chhattisgarh" id="fcity"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Target Year *</label>
+            <select class="form-select" required id="fyear">
+              <option value="">Select Year</option>
+              <option>UPSC CSE 2025</option>
+              <option>UPSC CSE 2026</option>
+              <option>UPSC CSE 2027</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Course Interest *</label>
+            <select class="form-select" required id="fcourse">
+              <option value="">Select Course</option>
+              <option>GS Foundation (Prelims + Mains)</option>
+              <option>Prelims Crash Course</option>
+              <option>Mains Answer Writing</option>
+              <option>CSAT Mastery</option>
+              <option>Interview Guidance Programme</option>
+              <option>Optional Subject</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message (Optional)</label>
+          <textarea class="form-textarea" placeholder="Tell us about your preparation stage, any specific doubts, or questions about our programs..." id="fmsg"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Submit Enrollment Request →</button>
+        <div class="form-note">Or call us directly at <a href="tel:+919876543210">+91 98765 43210</a> for instant counselling</div>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">🎉</div>
+        <div class="form-success-title">You're on your way!</div>
+        <div class="form-success-text">Thank you for enrolling. Our counsellor will call you within 24 hours to discuss your IAS journey. Check your email for a confirmation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="sr" style="text-align:center">
+      <div class="section-label" style="justify-content:center">FAQ</div>
+      <div class="section-title" style="text-align:center">Frequently Asked <em>Questions</em></div>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-list sr">
+        <div class="faq-item open">
+          <button class="faq-question">What is the eligibility for UPSC CSE?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Any Indian citizen who has a graduate degree from a recognised university is eligible. Age: 21–32 years (General), with relaxation for SC/ST/OBC/PwD. Maximum 6 attempts for General, 9 for OBC, unlimited for SC/ST.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">When does the next batch start?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">The next GS Foundation batch starts April 15, 2025. The Prelims Crash Course batch starts May 1, 2025. Limited seats — enroll now to secure your spot.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">What is the difference between online and offline batches?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Online batches offer live streaming, recorded access, and digital materials. Offline batches at our Delhi campus include in-person mentoring, physical books, and direct interaction. Hybrid batches combine both. Content is identical across all modes.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Do you offer EMI or scholarship options?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes! We offer 0% interest EMI plans (6/12/18 months) for all programs above ₹15,000. Scholarships of 15–40% are available for female aspirants, defence background candidates, and previous year UPSC qualifiers. Contact us for details.</div></div>
+        </div>
+      </div>
+      <div class="faq-list sr" style="transition-delay:0.1s">
+        <div class="faq-item">
+          <button class="faq-question">Is study material provided with the course?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes, all courses include comprehensive study material — printed booklets for offline students and digital PDFs for online students. Monthly CA magazines, PYP compilations and mind maps are also provided at no extra cost.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">How are doubt clearing sessions organised?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We conduct daily doubt clearing sessions (online) from 7–9 PM. Offline students have access to faculty during campus hours. Additionally, we have a WhatsApp group monitored by faculty for urgent academic doubts.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">What is your refund policy?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Full refund within 7 days of enrollment if you are not satisfied. 50% refund within 30 days. After 30 days, a pro-rated refund may be considered on a case-by-case basis. Interview Guidance Programme fees are non-refundable after the first session.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Can I get a demo class before enrolling?<div class="faq-icon">+</div></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Absolutely! We offer a free 1-hour demo class for any program. Visit our campus in Delhi or attend online via our platform. Book your free demo by calling us or submitting the enrollment form above.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.getElementById('enrollForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  if (!name || !phone) { alert('Please fill in Name and Phone number.'); return; }
+  this.style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+});
+
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+    // Close all in same list
+    btn.closest('.faq-list').querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-answer').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+// Open first FAQ
+document.querySelectorAll('.faq-item.open').forEach(item => {
+  item.querySelector('.faq-answer').style.maxHeight = '200px';
+});
+injectFooter();
+initCommon();
+</script>
+</body>
+</html>
